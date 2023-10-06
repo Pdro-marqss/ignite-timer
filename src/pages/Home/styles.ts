@@ -53,6 +53,11 @@ const BaseInput = styled.input`
 //O styled(BaseInput) faz com que eu use o "molde"
 export const TaskInput = styled(BaseInput)`
    flex: 1;
+
+   //isso tira a flechinha da direita do input 
+   &::-webkit-calendar-picker-indicator {
+      display: none !important;
+   }
 `;
 
 export const MinutesAmountInput = styled(BaseInput)`
