@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as zod from 'zod';
@@ -19,7 +20,16 @@ const newCycleFormValidationSchema = zod.object({
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 
+interface Cycle {
+   id: string;
+   task: string;
+   minutesAmount: number;
+}
+
 export function Home() {
+   const [cycles, setCycles] = useState<Cycle[]>([]);
+   const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+
    // register cria e da propriedades ao input e rrecebe o nome dele como parametro em string / handleSubmit recebe uma função handle como arg e devolve em data os dados recebidos dos campos do form ao realizar o submit / watch observa algum campo e mantem seu valor atualizado / formState guarda um valor de errors para gerar mensagens de erro na validação.
    const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
       resolver: zodResolver(newCycleFormValidationSchema),
@@ -30,9 +40,21 @@ export function Home() {
    });
 
    function handleCreateNewCycle(data: NewCycleFormData) {
-      console.log(data);
+      const newCycle: Cycle = {
+         id: String(new Date().getTime()),
+         task: data.task,
+         minutesAmount: data.minutesAmount,
+      }
+
+      setCycles((state) => [...state, newCycle]); //É o mesmo que setCycles([...cycles, newCycle]) só que mais performatico. Sempre que uma auteração de estado depende do valor anterior e bom fazer assim
+      setActiveCycleId(newCycle.id);
+
       reset(); //ele reseta os valores do input pro valor padrao definidos no defaultValues do useForm acima.
    }
+
+   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+
+   console.log(activeCycle);
 
    const task = watch('task');
    const isSubmitDisabled = !task;
