@@ -13,6 +13,8 @@
 	<img title="#ignite-timer" src="./.github/home.png" alt="" />
 </div>
 
+<br>
+
 <div align="center"> 
 	<img title="#ignite-timer" src="./.github/history.png" alt="" />
 </div>
