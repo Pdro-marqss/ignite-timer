@@ -10,16 +10,16 @@
 </p>
 
 <div align="center"> 
-	<img alt="ignite-timer" title="#ignite-timer" src="./.github/banner-1.PNG" />
+	<img title="#ignite-timer" src="./.github/home.png" alt="" />
 </div>
 
 <div align="center"> 
-	<img alt="ignite-timer" title="#ignite-timer" src="./.github/banner-2.PNG" />
+	<img title="#ignite-timer" src="./.github/history.png" alt="" />
 </div>
 
 ## About
 
-Ignite-timer is a timer to apply the pomodoro technique with history of past activities.
+Ignite-timer is a tool to apply the pomodoro technique with history of past activities.
 
 This project was developed during the Ignite Course from [Rocketseat](https://www.rocketseat.com.br/ignite).
 
@@ -28,9 +28,9 @@ This project was developed during the Ignite Course from [Rocketseat](https://ww
 ## Features
 
 - [x] Create a timer to apply the pomodoro technique
-- [x] Interrupt timer any time
-- [x] History of previous timer and activities with status
-- [x] Persist data in local storage
+- [] Interrupt timer any time
+- [] History with past timers and their status
+- [] Persist data in local storage
 
 ---
 
@@ -71,6 +71,6 @@ Tools used in the construction of this project:
 - **[PhosphorIcons](https://phosphoricons.com/)**
 - **[Zod](https://zod.dev/)**
 - **[date-fns](https://date-fns.org/)**
-- **[Immer](https://immerjs.github.io/immer/)**
+<!-- - **[Immer](https://immerjs.github.io/immer/)** -->
 
 ---
