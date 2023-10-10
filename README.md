@@ -30,7 +30,7 @@ This project was developed during the Ignite Course from [Rocketseat](https://ww
 ## Features
 
 - [x] Create a timer to apply the pomodoro technique
-- [ ] Interrupt timer any time
+- [x] Interrupt timer any time
 - [ ] History with past timers and their status
 - [ ] Persist data in local storage
 
