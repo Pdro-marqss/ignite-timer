@@ -1,27 +1,76 @@
-# React + TypeScript + Vite
+<h1 align="center">
+    <img title="#ignite-timer" src="./.github/logo-ignite.svg" alt=""/>
+</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <a href="#about">About</a> •
+  <a href="#features">Features</a> •
+  <a href="#how-it-works">How to run the application</a> • 
+  <a href="#tech-stack">Techs used</a>
+</p>
 
-Currently, two official plugins are available:
+<div align="center"> 
+	<img alt="ignite-timer" title="#ignite-timer" src="./.github/banner-1.PNG" />
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div align="center"> 
+	<img alt="ignite-timer" title="#ignite-timer" src="./.github/banner-2.PNG" />
+</div>
 
-## Expanding the ESLint configuration
+## About
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Ignite-timer is a timer to apply the pomodoro technique with history of past activities.
 
-- Configure the top-level `parserOptions` property like this:
+This project was developed during the Ignite Course from [Rocketseat](https://www.rocketseat.com.br/ignite).
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+---
+
+## Features
+
+- [x] Create a timer to apply the pomodoro technique
+- [x] Interrupt timer any time
+- [x] History of previous timer and activities with status
+- [x] Persist data in local storage
+
+---
+
+## How to run the application
+
+You will need to have [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/) installed to run the project:
+
+#### Running the app
+
+```bash
+
+# Clone this repository
+$ git clone https://github.com/Pdro-marqss/ignite-timer.git
+
+# Access the project folder in your terminal
+$ cd ignite-timer
+
+# Install the dependencies
+$ npm install
+
+# Run the application in development mode
+$ npm run dev
+
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+---
+
+## Techs used
+
+Tools used in the construction of this project:
+
+- **[React](https://reactjs.org/)**
+- **[Vite](https://vitejs.dev/)**
+- **[Typescript](https://www.typescriptlang.org/)**
+- **[React Router](https://v5.reactrouter.com/web/guides/quick-start)**
+- **[Styled Components](https://styled-components.com/)**
+- **[React Hook Form](https://react-hook-form.com/)**
+- **[PhosphorIcons](https://phosphoricons.com/)**
+- **[Zod](https://zod.dev/)**
+- **[date-fns](https://date-fns.org/)**
+- **[Immer](https://immerjs.github.io/immer/)**
+
+---
