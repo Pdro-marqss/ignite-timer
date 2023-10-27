@@ -31,8 +31,8 @@ This project was developed during the Ignite Course from [Rocketseat](https://ww
 
 - [x] Create a timer to apply the pomodoro technique
 - [x] Interrupt timer any time
-- [ ] History with past timers and their status
-- [ ] Persist data in local storage
+- [x] History with past timers and their status
+- [x] Persist data in local storage
 
 ---
 
@@ -73,6 +73,5 @@ Tools used in the construction of this project:
 - **[PhosphorIcons](https://phosphoricons.com/)**
 - **[Zod](https://zod.dev/)**
 - **[date-fns](https://date-fns.org/)**
-<!-- - **[Immer](https://immerjs.github.io/immer/)** -->
 
 ---
