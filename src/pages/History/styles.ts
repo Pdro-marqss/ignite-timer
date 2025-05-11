@@ -59,3 +59,27 @@ export const HistoryList = styled.div`
     }
   }
 `;
+
+const STATUS_COLORS = {
+  yellow: "yellow-500",
+  green: "green-500",
+  red: "red-500",
+} as const; //indica que o texto de cada chave é aquele e nunca vai mudar. Nao uma string apenas
+
+type TStatusProps = {
+  statusColor: keyof typeof STATUS_COLORS; //Essa tipagem é o mesmo que as keys de STAUS_COLORS
+};
+
+export const Status = styled.span<TStatusProps>`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  &::before {
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: ${(props) => props.theme[STATUS_COLORS[props.statusColor]]};
+  }
+`;
