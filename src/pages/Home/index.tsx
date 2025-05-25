@@ -13,6 +13,8 @@ import {
   TaskInput,
 } from "./styles";
 
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
+
 const mensagemErroMinutesAmountMinimo: string =
   "O ciclo precisa ser de no minimo 5 minutois";
 const mensagemErroMinutesAmountMaximo: string =
@@ -26,15 +28,20 @@ const newCycleFormValidationSchema = zod.object({
 });
 
 export function Home() {
-  const { register, handleSubmit, watch } = useForm({
+  const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
+    defaultValues: {
+      task: "",
+      minutesAmount: 0,
+    },
   });
 
   const task: string = watch("task");
   const isSubmitDisabled: boolean = !task;
 
-  function handleCreateNewCycle(data: any): void {
+  function handleCreateNewCycle(data: NewCycleFormData): void {
     console.log(data);
+    reset();
   }
 
   return (
