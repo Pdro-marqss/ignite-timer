@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
@@ -15,6 +16,12 @@ import {
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>;
 
+interface Cycle {
+  id: string;
+  task: string;
+  minutesAmount: number;
+}
+
 const mensagemErroMinutesAmountMinimo: string =
   "O ciclo precisa ser de no minimo 5 minutois";
 const mensagemErroMinutesAmountMaximo: string =
@@ -28,6 +35,10 @@ const newCycleFormValidationSchema = zod.object({
 });
 
 export function Home() {
+  const [cycles, setCycles] = useState<Cycle[]>([]);
+  const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
+  const [amountSecondsPased, setAmountSecondsPased] = useState<number>(0);
+
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
     defaultValues: {
@@ -40,9 +51,33 @@ export function Home() {
   const isSubmitDisabled: boolean = !task;
 
   function handleCreateNewCycle(data: NewCycleFormData): void {
-    console.log(data);
+    const id = String(new Date().getTime());
+
+    const newCycle: Cycle = {
+      id: id,
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+    };
+
+    // Fornece versao atualizada ja nesse ciclo da funcao;
+    setCycles((currentState) => [...currentState, newCycle]);
+    setActiveCycleId(id);
+
     reset();
   }
+
+  const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
+
+  const totalSeconds: number = activeCycle ? activeCycle.minutesAmount * 60 : 0;
+  const currentSeconds: number = activeCycle
+    ? totalSeconds - amountSecondsPased
+    : 0;
+
+  const minutesAmount: number = Math.floor(currentSeconds / 60);
+  const secondsAmount: number = currentSeconds % 60;
+
+  const minutes: string = String(minutesAmount).padStart(2, "0");
+  const seconds: string = String(secondsAmount).padStart(2, "0");
 
   return (
     <HomeContainer>
@@ -78,11 +113,11 @@ export function Home() {
         </FormContainer>
 
         <CountdownContainer>
-          <span>0</span>
-          <span>0</span>
+          <span>{minutes[0]}</span>
+          <span>{minutes[1]}</span>
           <Separator>:</Separator>
-          <span>0</span>
-          <span>0</span>
+          <span>{seconds[0]}</span>
+          <span>{seconds[1]}</span>
         </CountdownContainer>
 
         <StartCountdownButton type="submit" disabled={isSubmitDisabled}>
