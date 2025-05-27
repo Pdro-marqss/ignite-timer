@@ -69,12 +69,26 @@ export function Home() {
   //Lógica e funções
 
   useEffect(() => {
+    let interval: number;
+
     if (activeCycle) {
-      setInterval(() => {
+      interval = setInterval(() => {
         setAmountSecondsPased(differenceInSeconds(new Date(), activeCycle.startDate));
       }, 1000)
     }
+
+    return () => {
+      // O retorno de um useEffect serve para limpar o efeito anterior gerado na renderização passada. Quase um onDestroy 
+      clearInterval(interval);
+    }
+
   }, [activeCycle]);
+
+  useEffect(() => {
+    if (activeCycle) {
+      document.title = `${minutes}:${seconds}`;
+    }
+  }, [minutes, seconds, activeCycle]);
 
 
   function handleCreateNewCycle(data: NewCycleFormData): void {
@@ -90,6 +104,7 @@ export function Home() {
     // Fornece versao atualizada ja nesse ciclo da funcao;
     setCycles((currentState) => [...currentState, newCycle]);
     setActiveCycleId(id);
+    setAmountSecondsPased(0);
 
     reset();
   }
