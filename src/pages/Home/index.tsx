@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as zod from "zod";
+import { differenceInSeconds } from 'date-fns';
 
 import { Play } from "phosphor-react";
 import {
@@ -20,6 +21,7 @@ interface Cycle {
   id: string;
   task: string;
   minutesAmount: number;
+  startDate: Date;
 }
 
 const mensagemErroMinutesAmountMinimo: string =
@@ -35,6 +37,7 @@ const newCycleFormValidationSchema = zod.object({
 });
 
 export function Home() {
+  //Variaveis
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
   const [amountSecondsPased, setAmountSecondsPased] = useState<number>(0);
@@ -50,22 +53,6 @@ export function Home() {
   const task: string = watch("task");
   const isSubmitDisabled: boolean = !task;
 
-  function handleCreateNewCycle(data: NewCycleFormData): void {
-    const id = String(new Date().getTime());
-
-    const newCycle: Cycle = {
-      id: id,
-      task: data.task,
-      minutesAmount: data.minutesAmount,
-    };
-
-    // Fornece versao atualizada ja nesse ciclo da funcao;
-    setCycles((currentState) => [...currentState, newCycle]);
-    setActiveCycleId(id);
-
-    reset();
-  }
-
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
 
   const totalSeconds: number = activeCycle ? activeCycle.minutesAmount * 60 : 0;
@@ -78,6 +65,36 @@ export function Home() {
 
   const minutes: string = String(minutesAmount).padStart(2, "0");
   const seconds: string = String(secondsAmount).padStart(2, "0");
+
+  //Lógica e funções
+
+  useEffect(() => {
+    if (activeCycle) {
+      setInterval(() => {
+        setAmountSecondsPased(differenceInSeconds(new Date(), activeCycle.startDate));
+      }, 1000)
+    }
+  }, [activeCycle]);
+
+
+  function handleCreateNewCycle(data: NewCycleFormData): void {
+    const id = String(new Date().getTime());
+
+    const newCycle: Cycle = {
+      id: id,
+      task: data.task,
+      minutesAmount: data.minutesAmount,
+      startDate: new Date(),
+    };
+
+    // Fornece versao atualizada ja nesse ciclo da funcao;
+    setCycles((currentState) => [...currentState, newCycle]);
+    setActiveCycleId(id);
+
+    reset();
+  }
+
+  //JSX
 
   return (
     <HomeContainer>
