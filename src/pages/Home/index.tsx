@@ -24,6 +24,7 @@ interface Cycle {
   minutesAmount: number;
   startDate: Date;
   interruptedDate?: Date;
+  finishedDate?: Date;
 }
 
 const mensagemErroMinutesAmountMinimo: string =
@@ -42,7 +43,7 @@ export function Home() {
   //Variaveis
   const [cycles, setCycles] = useState<Cycle[]>([]);
   const [activeCycleId, setActiveCycleId] = useState<string | null>(null);
-  const [amountSecondsPased, setAmountSecondsPased] = useState<number>(0);
+  const [amountSecondsPassed, setAmountSecondsPassed] = useState<number>(0);
 
   const { register, handleSubmit, watch, reset } = useForm<NewCycleFormData>({
     resolver: zodResolver(newCycleFormValidationSchema),
@@ -59,7 +60,7 @@ export function Home() {
 
   const totalSeconds: number = activeCycle ? activeCycle.minutesAmount * 60 : 0;
   const currentSeconds: number = activeCycle
-    ? totalSeconds - amountSecondsPased
+    ? totalSeconds - amountSecondsPassed
     : 0;
 
   const minutesAmount: number = Math.floor(currentSeconds / 60);
@@ -75,7 +76,24 @@ export function Home() {
 
     if (activeCycle) {
       interval = setInterval(() => {
-        setAmountSecondsPased(differenceInSeconds(new Date(), activeCycle.startDate));
+        const secondsDifference: number = differenceInSeconds(new Date(), activeCycle.startDate);
+
+        if (secondsDifference >= totalSeconds) {
+          setCycles((state) => state.map((cycle) => {
+            if (cycle.id === activeCycleId) {
+              return { ...cycle, finishedDate: new Date() }
+            } else {
+              return cycle;
+            }
+          }),
+          );
+
+          setAmountSecondsPassed(totalSeconds)
+          clearInterval(interval);
+        } else {
+          setAmountSecondsPassed(secondsDifference);
+        }
+
       }, 1000)
     }
 
@@ -84,7 +102,7 @@ export function Home() {
       clearInterval(interval);
     }
 
-  }, [activeCycle]);
+  }, [activeCycle, totalSeconds, activeCycleId]);
 
   useEffect(() => {
     if (activeCycle) {
@@ -105,19 +123,20 @@ export function Home() {
     // Fornece versao atualizada ja nesse ciclo da funcao;
     setCycles((currentState) => [...currentState, newCycle]);
     setActiveCycleId(id);
-    setAmountSecondsPased(0);
+    setAmountSecondsPassed(0);
 
     reset();
   }
 
   function handleInterruptCycle(): void {
-    setCycles(cycles.map((cycle) => {
+    setCycles((state) => state.map((cycle) => {
       if (cycle.id === activeCycleId) {
         return { ...cycle, interruptedDate: new Date() }
       } else {
         return cycle;
       }
-    }));
+    }),
+    );
 
     setActiveCycleId(null);
   }
