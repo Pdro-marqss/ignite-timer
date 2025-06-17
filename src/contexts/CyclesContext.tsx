@@ -68,8 +68,6 @@ export function CyclesContextProvider({ children }: CyclesContextProviderProps) 
     setCycles((currentState) => [...currentState, newCycle]);
     setActiveCycleId(id);
     setAmountSecondsPassed(0);
-
-    // reset();
   }
 
   function interruptCurrentCycle(): void {

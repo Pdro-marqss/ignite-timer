@@ -37,16 +37,20 @@ export function Home() {
     },
   });
 
-  const { handleSubmit, watch, /*reset*/ } = newCycleForm;
+  const { handleSubmit, watch, reset } = newCycleForm;
 
   const task: string = watch("task");
   const isSubmitDisabled: boolean = !task;
 
-  //JSX
+  function handleCreateNewCycle(data: NewCycleFormData): void {
+    createNewCycle(data);
+    reset();
+  }
 
+  //JSX
   return (
     <HomeContainer>
-      <form action="" onSubmit={handleSubmit(createNewCycle)}>
+      <form action="" onSubmit={handleSubmit(handleCreateNewCycle)}>
         <FormProvider {...newCycleForm}>
           <NewCycleForm />
         </FormProvider>
